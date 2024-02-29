@@ -1,7 +1,3 @@
-//
-// Created by PinkySmile on 31/10/2020
-//
-
 #include <SokuLib.hpp>
 #include <detours.h>
 
