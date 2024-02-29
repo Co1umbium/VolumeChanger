@@ -1,11 +1,13 @@
 #include <SokuLib.hpp>
 #include <detours.h>
+#include <shlwapi.h>
+#define _iniName (L"\\VolumeChanger.ini")
 
 using P2F1 = void (*)(int);
 P2F1 BGMVolumeModifier = reinterpret_cast<P2F1>(0x0043e200);
 P2F1 SEVolumeModifier = reinterpret_cast<P2F1>(0x0043e230);
 
-using P2F2 = void(_fastcall *)(SokuLib::Renderer *);
+using P2F2 = void(_fastcall*)(SokuLib::Renderer*);
 P2F2 RenderEnd = reinterpret_cast<P2F2>(0x00401040);
 
 WNDPROC Original_WndProc;
@@ -13,8 +15,8 @@ WPARAM BI, BD;
 
 static bool init = false;
 static bool isshow = false;
-unsigned *BGMVolume = (unsigned *)0x008998a8;
-unsigned *SEVolume = (unsigned *)0x008998ac;
+unsigned* BGMVolume = (unsigned*)0x008998a8;
+unsigned* SEVolume = (unsigned*)0x008998ac;
 
 LRESULT Hooked_WndProc(HWND hWnd, UINT uMsg, WPARAM wparam, LPARAM lparam)
 {
@@ -38,7 +40,7 @@ LRESULT Hooked_WndProc(HWND hWnd, UINT uMsg, WPARAM wparam, LPARAM lparam)
 	}
 	return Original_WndProc(hWnd, uMsg, wparam, lparam);
 }
-void __fastcall BeforeRenderEnd(SokuLib::Renderer *This)
+void __fastcall BeforeRenderEnd(SokuLib::Renderer* This)
 {
 	if (!init)
 	{
@@ -61,19 +63,25 @@ extern "C" __declspec(dllexport) bool CheckVersion(const BYTE hash[16])
 extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hParentModule)
 {
 #ifdef _DEBUG
-	FILE *_;
+	FILE* _;
 
 	AllocConsole();
 	freopen_s(&_, "CONOUT$", "w", stdout);
 	freopen_s(&_, "CONOUT$", "w", stderr);
 #endif
-	BI = GetPrivateProfileInt("Keyboard", "increase_bgm_volume", 0x4E, ".\\modules\\VolumeChanger\\VolumeChanger.ini");
-	BD = GetPrivateProfileInt("Keyboard", "decrease_bgm_volume", 0x4D, ".\\modules\\VolumeChanger\\VolumeChanger.ini");
+	wchar_t wIniPath[1024];
+	GetModuleFileNameW(hMyModule, wIniPath, 1024);
+	PathRemoveFileSpecW(wIniPath);
+	wcscat(wIniPath, _iniName);
+	wprintf(L"%ls", wIniPath);
+
+	BI = GetPrivateProfileIntW(L"Keyboard", L"increase_bgm_volume", 0x4E, wIniPath);
+	BD = GetPrivateProfileIntW(L"Keyboard", L"decrease_bgm_volume", 0x4D, wIniPath);
 	printf("%d %d", BI, BD);
 
 	DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
-	DetourAttach((void **)&RenderEnd, (void *)BeforeRenderEnd);
+	DetourAttach((void**)&RenderEnd, (void*)BeforeRenderEnd);
 	DetourTransactionCommit();
 	return true;
 }
