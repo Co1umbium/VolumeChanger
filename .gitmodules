@@ -1,0 +1,7 @@
+[submodule "src/Detours"]
+	path = src/Detours
+	url = https://github.com/microsoft/Detours
+[submodule "SokuLib"]
+	branch = dev
+	path = SokuLib
+	url = https://github.com/SokuDev/SokuLib
