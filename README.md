@@ -27,7 +27,5 @@ cmake .. -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release
 running `cmake --build . --target ModTemplate` in the build directory.
 
 # TodoList
- Changing SEVolume haven't be implemented.
-
  Some kind of UI may be added...
 
