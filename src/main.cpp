@@ -14,9 +14,6 @@ using P2F3 = int(_fastcall*)(SokuLib::v2::Player*);
 P2F3 LoadSE = reinterpret_cast<P2F3>(0x0046b490);
 P2F3 UnloadSE = reinterpret_cast<P2F3>(0x0046c570);
 
-using P2F4 = UINT(_fastcall*)(int);
-P2F4 SetVolumeByDSBufferManagerID = reinterpret_cast<P2F4>(0x00401bd0);
-
 WNDPROC Original_WndProc;
 WPARAM BI, BD, SI, SD;
 static bool init = false;
