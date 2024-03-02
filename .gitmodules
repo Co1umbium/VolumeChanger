@@ -2,6 +2,6 @@
 	path = src/Detours
 	url = https://github.com/microsoft/Detours
 [submodule "SokuLib"]
-	branch = dev
+	branch = sound
 	path = SokuLib
-	url = https://github.com/SokuDev/SokuLib
+	url = https://github.com/Hagb/SokuLib
