@@ -71,7 +71,7 @@ void __fastcall BeforeRenderEnd(SokuLib::Renderer* This)
 	if (!init)
 	{
 		Original_WndProc = (WNDPROC)SetWindowLongPtr(SokuLib::window, GWL_WNDPROC, (LONG_PTR)Hooked_WndProc);
-		puts("yes");
+		puts("init\n");
 		init = true;
 	}
 
@@ -105,13 +105,13 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 	GetModuleFileNameW(hMyModule, wIniPath, 1024);
 	PathRemoveFileSpecW(wIniPath);
 	wcscat(wIniPath, _iniName);
-	wprintf(L"%ls", wIniPath);
+	wprintf(L"%ls\n", wIniPath);
 
 	BI = GetPrivateProfileIntW(L"Keyboard", L"increase_bgm_volume", 'M', wIniPath);
 	BD = GetPrivateProfileIntW(L"Keyboard", L"decrease_bgm_volume", 'N', wIniPath);
 	SI = GetPrivateProfileIntW(L"Keyboard", L"increase_se_volume", 'B', wIniPath);
 	SD = GetPrivateProfileIntW(L"Keyboard", L"decrease_se_volume", 'V', wIniPath);
-	printf("%d,%d,%d,%d", BI, BD, SI, SD);
+	printf("%d,%d,%d,%d\n", BI, BD, SI, SD);
 
 	DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
