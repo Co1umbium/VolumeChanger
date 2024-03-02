@@ -33,14 +33,14 @@ void SetPlayerVolume() {
 LRESULT Hooked_WndProc(HWND hWnd, UINT uMsg, WPARAM wparam, LPARAM lparam)
 {
 	if (uMsg == WM_KEYDOWN) {
-		if (wparam == BI && *BGMVolume >= 5)
+		if (wparam == BD && *BGMVolume >= 5)
 		{
 
 			BGMVolumeModifier(*BGMVolume -= 5);
 			printf("BGMVolume:%d\n", *BGMVolume);
 
 		}
-		if (wparam == BD && *BGMVolume <= 95)
+		if (wparam == BI && *BGMVolume <= 95)
 		{
 
 			BGMVolumeModifier(*BGMVolume += 5);
