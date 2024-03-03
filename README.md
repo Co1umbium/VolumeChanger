@@ -1,11 +1,12 @@
 # VolumeChanger
-This is a mod for 東方非想天則 / Touhou 12.3 Hisoutensoku which makes it available to change volume in game with modifiable hotkey
+This is a mod for 東方非想天則 / Touhou 12.3 Hisoutensoku which makes it available to change volume in game with modifiable hotkey.
 
+Thank [Hagb](https://github.com/Hagb) and [Tstar](https://github.com/Tstar00) for their suggestions and tests a lot.
 ## Usage
 Mod is currently only usable with the SWRSToys loader, place the mod alongside the VolumeChanger.ini config file in a subdirectory of the modules directory, and point to it in the SWRSToys.ini file, similar to other SWRSToys mods.
 
 Hotkey can be customolized by modifying the key in the VolumeChange.ini
-> By defalut it will be the 'M' to increase and the 'N' to decrease the BGMvolume
+> By defalut it will be the 'M' to increase and the 'N' to decrease the BGMvolume.
 
 ## Build and Compiling
 Requires CMake, git and the VisualStudio compiler (MSVC). Both git and cmake needs to be in the PATH environment variable.
@@ -26,6 +27,6 @@ cmake .. -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release
 ### And then compile it
 running `cmake --build . --target ModTemplate` in the build directory.
 
-# TodoList
- Some kind of UI may be added...
+## TodoList
+Some kind of UI may be added...
 

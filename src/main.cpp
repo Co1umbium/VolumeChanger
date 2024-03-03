@@ -16,6 +16,7 @@ P2F3 UnloadSE = reinterpret_cast<P2F3>(0x0046c570);
 
 WNDPROC Original_WndProc;
 WPARAM BI, BD, SI, SD, CK;
+int id;
 static bool init = false;
 std::vector<SokuLib::v2::Player*> players;
 unsigned* BGMVolume = (unsigned*)0x008998a8;
@@ -54,6 +55,7 @@ LRESULT Hooked_WndProc(HWND hWnd, UINT uMsg, WPARAM wparam, LPARAM lparam)
 
 			SEVolumeModifier(*SEVolume -= 5);
 			SetPlayerVolume();
+			SokuLib::playSEWaveBuffer(id);
 			printf("SEVolume:%d\n", *SEVolume);
 
 		}
@@ -62,6 +64,7 @@ LRESULT Hooked_WndProc(HWND hWnd, UINT uMsg, WPARAM wparam, LPARAM lparam)
 
 			SEVolumeModifier(*SEVolume += 5);
 			SetPlayerVolume();
+			SokuLib::playSEWaveBuffer(id);
 			printf("SEVolume:%d\n", *SEVolume);
 		}
 	}
@@ -114,6 +117,7 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 	SI = GetPrivateProfileIntW(L"Keyboard", L"increase_se_volume", 'B', wIniPath);
 	SD = GetPrivateProfileIntW(L"Keyboard", L"decrease_se_volume", 'V', wIniPath);
 	CK = GetPrivateProfileIntW(L"Keyboard", L"combination_key",0x11, wIniPath);
+	id = GetPrivateProfileIntW(L"Keyboard", L"volume_notification_sound", 39, wIniPath);
 	printf("%d,%d,%d,%d,%d\n", BI, BD, SI, SD, CK);
 
 	DetourTransactionBegin();
