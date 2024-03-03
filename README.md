@@ -2,7 +2,7 @@
 This is a mod for 東方非想天則 / Touhou 12.3 Hisoutensoku which makes it available to change volume in game with modifiable hotkey
 
 ## Usage
-Mod is currently only usable with the SWRSToys loader, place the mod alongside the VolumeChanger.ini config file in a subdirectory of the modules directory, and point to it in the SWRSToys.ini file, similar to other SWRSToys mods. You will need to disable any version of Sokuroll you might have already enabled.
+Mod is currently only usable with the SWRSToys loader, place the mod alongside the VolumeChanger.ini config file in a subdirectory of the modules directory, and point to it in the SWRSToys.ini file, similar to other SWRSToys mods.
 
 Hotkey can be customolized by modifying the key in the VolumeChange.ini
 > By defalut it will be the 'M' to increase and the 'N' to decrease the BGMvolume

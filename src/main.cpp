@@ -15,11 +15,16 @@ P2F3 LoadSE = reinterpret_cast<P2F3>(0x0046b490);
 P2F3 UnloadSE = reinterpret_cast<P2F3>(0x0046c570);
 
 WNDPROC Original_WndProc;
-WPARAM BI, BD, SI, SD;
+WPARAM BI, BD, SI, SD, CK;
 static bool init = false;
 std::vector<SokuLib::v2::Player*> players;
 unsigned* BGMVolume = (unsigned*)0x008998a8;
 unsigned* SEVolume = (unsigned*)0x008998ac;
+bool isdown(WPARAM key) {
+	if (!key)
+		return true;
+	return GetKeyState(key) & 0x8000;
+}
 void SetPlayerVolume() {
 	for (auto player = players.begin(); player != players.end(); player++) {
 		for (int i = 0; i < 0x100; i++) {
@@ -30,21 +35,21 @@ void SetPlayerVolume() {
 LRESULT Hooked_WndProc(HWND hWnd, UINT uMsg, WPARAM wparam, LPARAM lparam)
 {
 	if (uMsg == WM_KEYDOWN) {
-		if (wparam == BD && *BGMVolume >= 5)
+		if (wparam == BD && *BGMVolume >= 5 && isdown(CK))
 		{
 
 			BGMVolumeModifier(*BGMVolume -= 5);
 			printf("BGMVolume:%d\n", *BGMVolume);
 
 		}
-		if (wparam == BI && *BGMVolume <= 95)
+		if (wparam == BI && *BGMVolume <= 95 && isdown(CK))
 		{
 
 			BGMVolumeModifier(*BGMVolume += 5);
 			printf("BGMVolume:%d\n", *BGMVolume);
 
 		}
-		if (wparam == SD && *SEVolume >= 5)
+		if (wparam == SD && *SEVolume >= 5 && isdown(CK))
 		{
 
 			SEVolumeModifier(*SEVolume -= 5);
@@ -52,7 +57,7 @@ LRESULT Hooked_WndProc(HWND hWnd, UINT uMsg, WPARAM wparam, LPARAM lparam)
 			printf("SEVolume:%d\n", *SEVolume);
 
 		}
-		if (wparam == SI && *SEVolume <= 95)
+		if (wparam == SI && *SEVolume <= 95 && isdown(CK))
 		{
 
 			SEVolumeModifier(*SEVolume += 5);
@@ -108,7 +113,8 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 	BD = GetPrivateProfileIntW(L"Keyboard", L"decrease_bgm_volume", 'N', wIniPath);
 	SI = GetPrivateProfileIntW(L"Keyboard", L"increase_se_volume", 'B', wIniPath);
 	SD = GetPrivateProfileIntW(L"Keyboard", L"decrease_se_volume", 'V', wIniPath);
-	printf("%d,%d,%d,%d\n", BI, BD, SI, SD);
+	CK = GetPrivateProfileIntW(L"Keyboard", L"combination_key",0x11, wIniPath);
+	printf("%d,%d,%d,%d,%d\n", BI, BD, SI, SD, CK);
 
 	DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());

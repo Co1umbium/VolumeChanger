@@ -1,0 +1,6 @@
+VolumeChanger = Modules/VolumeChanger.dll
+
+可以使用自定义快捷键改变音量
+
+快捷键配置于VolumeChanger.ini
+
