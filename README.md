@@ -25,7 +25,7 @@ cmake .. -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release
 "Release" can also be replaced by "Debug" to build in Debug, which could display debug information in the console.
 
 ### And then compile it
-running `cmake --build . --target ModTemplate` in the build directory.
+running `cmake --build . --target VolumeChanger` in the build directory.
 
 ## TodoList
 Some kind of UI may be added...
